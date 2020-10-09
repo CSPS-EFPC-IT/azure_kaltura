@@ -3,6 +3,7 @@
 # cedric.guindon@canada.ca
 #
 # kaltura_install
+#
 # This script will automate the installation of the Kaltura CE application
 # ------------------------------------------------------------------
 
