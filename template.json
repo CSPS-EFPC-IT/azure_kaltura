@@ -313,7 +313,7 @@
                                 "typeHandlerVersion": "2.0",
                                 "settings": {
                                     "fileUris": [
-                                        "[concat(parameters('fileRepositoryUri'),'/scripts/kalturainstall.sh')]"
+                                        "[concat(parameters('fileRepositoryUri'),'/scripts/kaltura_install.sh')]"
                                     ],
                                     "commandToExecute": "[concat('sudo ./kalturainstall.sh ', parameters('publicIPAddresses_properties_dnsSettings_fqdn'), ' ', parameters('adminEmail'), ' ', parameters('adminPassword'), ' ', parameters('virtualMachines_password'), ' ', parameters('kalturaDBPassword'), ' > kaltura_install.log')]"
                                 }

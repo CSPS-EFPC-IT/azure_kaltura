@@ -139,7 +139,6 @@ service memcached restart
 chkconfig memcached on
 
 ##### Configuring kaltura
-rm -f /opt/kaltura/log/configall.ans
 
 cat > /opt/kaltura/log/configall.ans << EOF
 TIME_ZONE="America/Toronto"
