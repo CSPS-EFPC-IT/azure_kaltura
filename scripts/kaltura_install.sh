@@ -166,7 +166,6 @@ SUPER_USER="root"
 SUPER_USER_PASSWD="$ROOTPASSWORD"
 ENVIRONMENT_NAME="Kaltura Video Platform"
 CONFIG_CHOICE="0"
-DWH_PASS="$KALTDBPASSWORD"
 PROTOCOL="http"
 PRIMARY_MEDIA_SERVER_HOST="$FQDN"
 USER_CONSENT="0"
@@ -195,14 +194,14 @@ sed -i '$ d' /etc/hosts
 ##### Configuring the SSL settings for httpd and nginx
 sed -i "s/<VirtualHost $FQDN>/<VirtualHost *:443>/" /etc/httpd/conf.d/zzzkaltura.ssl.conf
 
-mysql -u root -p$ROOTPASSWORD -e "select url from kaltura.delivery_profile where id in (1001,1002,1003)\G"
 mysql -u root -p$ROOTPASSWORD -e "UPDATE kaltura.delivery_profile SET url = REPLACE(url, '$FQDN:88', '$FQDN:8443') WHERE url like '$FQDN:88/%'"
-mysql -u root -p$ROOTPASSWORD -e "select url from kaltura.delivery_profile where id in (1001,1002,1003)\G"
 
 sed -i "s/http:\/\/kalapi\//https:\/\/kalapi\//" /etc/nginx/conf.d/kaltura.conf
 
 ##### Restarting web services
 service httpd restart
 service kaltura-nginx restart
+
+echo "Script completed!"
 
 # -----------------------------------------------------------------

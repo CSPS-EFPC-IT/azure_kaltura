@@ -302,25 +302,6 @@
                         }
                     ]
                 },
-                "extensionProfile": {
-                    "extensions": [
-                        {
-                            "name": "installcustomscript",
-                            "properties": {
-                                "autoUpgradeMinorVersion": true,
-                                "publisher": "Microsoft.Azure.Extensions",
-                                "type": "CustomScript",
-                                "typeHandlerVersion": "2.0",
-                                "settings": {
-                                    "fileUris": [
-                                        "[concat(parameters('fileRepositoryUri'),'/scripts/kaltura_install.sh')]"
-                                    ],
-                                    "commandToExecute": "[concat('sudo ./kalturainstall.sh ', parameters('publicIPAddresses_properties_dnsSettings_fqdn'), ' ', parameters('adminEmail'), ' ', parameters('adminPassword'), ' ', parameters('virtualMachines_password'), ' ', parameters('kalturaDBPassword'), ' > kaltura_install.log')]"
-                                }
-                            }
-                        }
-                    ]
-                },
                 "osProfile": {
                     "computerName": "[parameters('virtualMachines_name')]",
                     "adminUsername": "[parameters('virtualMachines_username')]",
@@ -346,6 +327,27 @@
                 }
             }
         },
+        {
+			"type": "Microsoft.Compute/virtualMachines/extensions",
+			"apiVersion": "2020-06-01",
+			"name": "[concat(parameters('virtualMachines_name'), '/installcustomscript')]",
+			"location": "canadacentral",
+			"dependsOn": [
+				"[concat('Microsoft.Compute/virtualMachines/',parameters('virtualMachines_name'))]"
+			],
+			"properties": {
+				"publisher": "Microsoft.Azure.Extensions",
+				"type": "CustomScript",
+				"typeHandlerVersion": "2.0",
+				"autoUpgradeMinorVersion":true,
+				"settings": {
+					"fileUris": [
+						"[concat(parameters('fileRepositoryUri'),'/scripts/kaltura_install.sh')]"
+					],
+					"commandToExecute": "[concat('sudo ./kaltura_install.sh ', parameters('publicIPAddresses_properties_dnsSettings_fqdn'), ' ', parameters('adminEmail'), ' ', parameters('adminPassword'), ' ', parameters('virtualMachines_password'), ' ', parameters('kalturaDBPassword'), ' > kaltura_install.log')]"
+				}
+			}
+		},
         {
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2020-05-01",
